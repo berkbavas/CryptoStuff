@@ -3,85 +3,60 @@ package crypto.traditional;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 
-public class MonoalphabeticCipher {
-    private final HashMap<Character, Character> key = new HashMap<>();
-    private final HashMap<Character, Character> inverseKey = new HashMap<>();
+public final class MonoalphabeticCipher {
 
-    public MonoalphabeticCipher() {
-        ArrayList<Character> key = new ArrayList<>(Arrays.asList('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
-                'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'));
+    private MonoalphabeticCipher() {
 
-        Collections.shuffle(key);
-
-        for (char ch = 'A'; ch <= 'Z'; ch++) {
-            char keyChar = key.get(ch - 'A');
-            this.key.put(ch, keyChar);
-            this.inverseKey.put(keyChar, ch);
-        }
     }
 
-    public MonoalphabeticCipher(String key) {
-        if (key.length() != 26)
-            throw new IllegalArgumentException("Key must be length of 26.");
-
-        for (char ch = 'A'; ch <= 'Z'; ch++) {
-            char keyChar = key.charAt(ch - 'A');
-            if (this.inverseKey.get(keyChar) == null) {
-                this.key.put(ch, keyChar);
-                this.inverseKey.put(keyChar, ch);
-            } else {
-                throw new IllegalArgumentException(String.format("Key is not a permutation. The character '%c' " +
-                        "occurs at least two times in the key.", keyChar));
-            }
-        }
-    }
-
-    public String encrypt(String plaintext) {
-        if (!plaintext.matches("[A-Z]+")) {
-            throw new IllegalArgumentException("Plaintext contains a character out of the range [A-Z].");
-        }
-
+    /**
+     * @param plaintext must be in [A-Z]+.
+     * @param key       must be a permutation of letters in [A-Z].
+     * @return encryption of {@code plaintext} under the {@code key}.
+     */
+    public static String encrypt(String plaintext, String key) {
         StringBuilder ciphertext = new StringBuilder();
 
-        for (char ch : plaintext.toCharArray()) {
-            ciphertext.append(encrypt(ch));
+        for (int i = 0; i < plaintext.length(); i++) {
+            int value = plaintext.charAt(i) - 'A';
+            ciphertext.append(key.charAt(value));
         }
 
         return ciphertext.toString();
     }
 
-    public String decrypt(String ciphertext) {
-        if (!ciphertext.matches("[A-Z]+")) {
-            throw new IllegalArgumentException("Ciphertext contains a character out of range [A-Z].");
-        }
-
+    /**
+     * @param ciphertext must be in [A-Z]+.
+     * @param key        must be a permutation of letters in [A-Z].
+     * @return decryption of {@code ciphertext} under the {@code key}.
+     */
+    public static String decrypt(String ciphertext, String key) {
         StringBuilder plaintext = new StringBuilder();
 
-        for (char ch : ciphertext.toCharArray()) {
-            plaintext.append(decrypt(ch));
+        for (int i = 0; i < ciphertext.length(); i++) {
+            char c = ciphertext.charAt(i);
+            int value = key.indexOf(c);
+            plaintext.append((char) (value + 'A'));
         }
 
         return plaintext.toString();
     }
 
-    private char encrypt(char ch) {
-        return key.get(ch);
-    }
+    public static String generateKey() {
+        ArrayList<Character> key = new ArrayList<>(Arrays.asList('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
+                'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'));
 
-    private char decrypt(char ch) {
-        return inverseKey.get(ch);
-    }
+        Collections.shuffle(key);
 
-    public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        for (char ch = 'A'; ch <= 'Z'; ch++) {
-            sb.append(key.get(ch));
+        for (Character ch : key) {
+            sb.append(ch);
         }
 
         return sb.toString();
     }
+
 
 }

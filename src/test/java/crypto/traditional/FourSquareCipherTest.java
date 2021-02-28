@@ -3,7 +3,6 @@ package crypto.traditional;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class FourSquareCipherTest {
 
@@ -12,54 +11,43 @@ class FourSquareCipherTest {
         final String plaintext = "ABCDEFGHIKLMNOPQRSTUVWXYABCDEFGHIKLMNOPQRSTUVWXY";
 
         for (int i = 0; i < 1000; i++) {
-            FourSquareCipher cipher = new FourSquareCipher();
-            String ciphertext = cipher.encrypt(plaintext);
-            assertEquals(plaintext, cipher.decrypt(ciphertext));
-            String[] keys = cipher.toString().split(":");
-
-            {
-                FourSquareCipher copyCipher = new FourSquareCipher(keys);
-                assertEquals(ciphertext, copyCipher.encrypt(plaintext));
-                assertEquals(plaintext, copyCipher.decrypt(ciphertext));
-            }
+            String[] key = FourSquareCipher.generateKey();
+            String ciphertext = FourSquareCipher.encrypt(plaintext, key);
+            assertEquals(plaintext, FourSquareCipher.decrypt(ciphertext, key));
         }
-
-        assertThrows(IllegalArgumentException.class, () -> new FourSquareCipher(new String[]{}));
-        assertThrows(IllegalArgumentException.class, () -> new FourSquareCipher(new String[]{"ASD", "AVC", "XYZ"}));
-        assertThrows(IllegalArgumentException.class, () -> new FourSquareCipher(new String[]{"", ""}));
-        assertThrows(IllegalArgumentException.class, () -> new FourSquareCipher(new String[]{"A", ""}));
-        assertThrows(IllegalArgumentException.class, () -> new FourSquareCipher(new String[]{"", "A"}));
-        assertThrows(IllegalArgumentException.class,
-                () -> new FourSquareCipher(new String[]{"ABCDEFGHJKLMNOPQRSTUVWXYZ", "ABCDEFGHIKLMNOPQRSTUVWXYZ"}));
-        assertThrows(IllegalArgumentException.class,
-                () -> new FourSquareCipher(new String[]{"ABCDEFGHIKLMNOPQRSTUVWXYZ", "ABCDEFGHJKLMNOPQRSTUVWXYZ"}));
-
     }
 
     @Test
     void encrypt() {
-        assertEquals("DUKVHYHPLF",
-                new FourSquareCipher(new String[]{"TESTING", "FOURSQUARE"}).encrypt("HELXOWORLD"));
-        assertEquals("EYMQLXLNNR",
-                new FourSquareCipher(new String[]{"FGHKASDDDSAASF", "RTYDKMBLDPSDV"}).encrypt("HELXOWORLD"));
-        assertEquals("", new FourSquareCipher().encrypt(""));
+        {
+            String[] keywords = new String[]{"TESTING", "FOURSQUARE"};
+            String[] key = FourSquareCipher.generateKey(keywords);
+            String plaintext = "HELXOWORLD";
+            assertEquals("DUKVHYHPLF", FourSquareCipher.encrypt(plaintext, key));
+        }
 
-        assertThrows(IllegalArgumentException.class, () -> new FourSquareCipher().encrypt("ABC"));
-        assertThrows(IllegalArgumentException.class, () -> new FourSquareCipher().encrypt("ABCJ"));
-        assertThrows(IllegalArgumentException.class, () -> new FourSquareCipher().encrypt("Hello World!"));
+        {
+            String[] keywords = new String[]{"FGHKASDDDSAASF", "RTYDKMBLDPSDV"};
+            String[] key = FourSquareCipher.generateKey(keywords);
+            String plaintext = "HELXOWORLD";
+            assertEquals("EYMQLXLNNR", FourSquareCipher.encrypt(plaintext, key));
+        }
     }
 
     @Test
     void decrypt() {
+        {
+            String[] keywords = new String[]{"TESTING", "FOURSQUARE"};
+            String[] key = FourSquareCipher.generateKey(keywords);
+            String ciphertext = "DUKVHYHPLF";
+            assertEquals("HELXOWORLD", FourSquareCipher.decrypt(ciphertext, key));
+        }
 
-        assertEquals("HELXOWORLD",
-                new FourSquareCipher(new String[]{"TESTING", "FOURSQUARE"}).decrypt("DUKVHYHPLF"));
-        assertEquals("HELXOWORLD",
-                new FourSquareCipher(new String[]{"FGHKASDDDSAASF", "RTYDKMBLDPSDV"}).decrypt("EYMQLXLNNR"));
-        assertEquals("", new FourSquareCipher().decrypt(""));
-
-        assertThrows(IllegalArgumentException.class, () -> new FourSquareCipher().decrypt("AAA"));
-        assertThrows(IllegalArgumentException.class, () -> new FourSquareCipher().decrypt("AAAJ"));
-        assertThrows(IllegalArgumentException.class, () -> new FourSquareCipher().decrypt("Hello World!"));
+        {
+            String[] keywords = new String[]{"FGHKASDDDSAASF", "RTYDKMBLDPSDV"};
+            String[] key = FourSquareCipher.generateKey(keywords);
+            String ciphertext = "EYMQLXLNNR";
+            assertEquals("HELXOWORLD", FourSquareCipher.decrypt(ciphertext, key));
+        }
     }
 }

@@ -4,172 +4,134 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-public class PlayfairCipher {
-    private char[][] key = new char[5][5];
+public final class PlayfairCipher {
 
-    public PlayfairCipher() {
-        ArrayList<Character> key = new ArrayList<>(Arrays.asList('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K',
-                'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'));
+    private PlayfairCipher() {
 
-        Collections.shuffle(key);
-        for (int i = 0; i < key.size(); i++) {
-            int row = i / 5;
-            int column = i % 5;
-            this.key[row][column] = key.get(i);
-        }
     }
 
-    public PlayfairCipher(String keyword) {
-        if (keyword.isEmpty())
-            throw new IllegalArgumentException("Keyword cannot be empty.");
-
-        if (!keyword.matches("[A-IK-Z]+")) {
-            throw new IllegalArgumentException("Keyword contains a character out of the range [A-IK-Z]. Keyword is " + keyword);
-        }
-
-        ArrayList<Character> key = new ArrayList<>();
-
-        for (char c : keyword.toCharArray()) {
-            if (key.contains(c))
-                continue;
-
-            key.add(c);
-        }
-
-        for (char ch = 'A'; ch <= 'Z'; ch++) {
-            if (ch == 'J')
-                continue;
-
-            if (key.contains(ch))
-                continue;
-
-            key.add(ch);
-        }
-
-        for (int i = 0; i < key.size(); i++) {
-            int row = i / 5;
-            int column = i % 5;
-            this.key[row][column] = key.get(i);
-        }
-    }
-
-    public String encrypt(String plaintext) {
-        if (plaintext.length() == 0)
-            return "";
-
-        if (plaintext.length() % 2 != 0)
-            throw new IllegalArgumentException("Length of the plaintext must be even.");
-
-
-        if (!plaintext.matches("[A-IK-Z]+"))
-            throw new IllegalArgumentException("Plaintext contains a character out of the range [A-IK-Z].");
-
+    /**
+     * @param plaintext must be in [A-IK-Z]+, length of {@code plaintext} must be even
+     *                  and plaintext must not contain two identical consecutive letters.
+     * @param key       must be a permutation of letters in [A-IK-Z].
+     * @return encryption of {@code plaintext} under the {@code key}.
+     */
+    public static String encrypt(String plaintext, String key) {
         StringBuilder ciphertext = new StringBuilder();
 
         for (int i = 0; i < plaintext.length(); i = i + 2) {
             char a = plaintext.charAt(i);
             char b = plaintext.charAt(i + 1);
 
-            if (a == b) {
-                throw new IllegalArgumentException(String.format("Two consecutive letters at %d and %d are the same.", i, i + 1));
+            int av = key.indexOf(a);
+            int bv = key.indexOf(b);
+
+            int ar = av / 5;
+            int ac = av % 5;
+            int br = bv / 5;
+            int bc = bv % 5;
+
+            if (ar == br) {
+                ciphertext.append(key.charAt(5 * ar + Math.floorMod(ac + 1, 5)));
+                ciphertext.append(key.charAt(5 * br + Math.floorMod(bc + 1, 5)));
+            } else if (ac == bc) {
+                ciphertext.append(key.charAt(5 * Math.floorMod(ar + 1, 5) + ac));
+                ciphertext.append(key.charAt(5 * Math.floorMod(br + 1, 5) + bc));
+            } else {
+                ciphertext.append(key.charAt(5 * ar + bc));
+                ciphertext.append(key.charAt(5 * br + ac));
             }
 
-            ciphertext.append(encrypt(a, b));
         }
+
         return ciphertext.toString();
     }
 
-    public String decrypt(String ciphertext) {
-        if (ciphertext.length() == 0)
-            return "";
-
-        if (ciphertext.length() % 2 != 0)
-            throw new IllegalArgumentException("Length of the ciphertext must be even.");
-
-        if (!ciphertext.matches("[A-IK-Z]+"))
-            throw new IllegalArgumentException("Ciphertext contains a character out of the range [A-IK-Z].");
-
+    /**
+     * @param ciphertext must be in [A-IK-Z]+, length of {@code ciphertext} must be even
+     *                   and ciphertext must not contain two identical consecutive letters.
+     * @param key        must be a permutation of letters in [A-IK-Z].
+     * @return decryption of {@code ciphertext} under the {@code key}.
+     */
+    public static String decrypt(String ciphertext, String key) {
         StringBuilder plaintext = new StringBuilder();
 
         for (int i = 0; i < ciphertext.length(); i = i + 2) {
             char a = ciphertext.charAt(i);
             char b = ciphertext.charAt(i + 1);
 
-            if (a == b) {
-                throw new IllegalArgumentException(String.format("Two consecutive letters at %d and %d are the same.", i, i + 1));
-            }
+            int av = key.indexOf(a);
+            int bv = key.indexOf(b);
 
-            plaintext.append(decrypt(a, b));
+            int ar = av / 5;
+            int ac = av % 5;
+            int br = bv / 5;
+            int bc = bv % 5;
+
+            if (ar == br) {
+                plaintext.append(key.charAt(5 * ar + Math.floorMod(ac - 1, 5)));
+                plaintext.append(key.charAt(5 * br + Math.floorMod(bc - 1, 5)));
+            } else if (ac == bc) {
+                plaintext.append(key.charAt(5 * Math.floorMod(ar - 1, 5) + ac));
+                plaintext.append(key.charAt(5 * Math.floorMod(br - 1, 5) + bc));
+            } else {
+                plaintext.append(key.charAt(5 * ar + bc));
+                plaintext.append(key.charAt(5 * br + ac));
+            }
         }
 
         return plaintext.toString();
     }
 
-    private char[] encrypt(char a, char b) {
-        int aRow = 0;
-        int aColumn = 0;
-        int bRow = 0;
-        int bColumn = 0;
+    /**
+     * @param keyword must be in [A-Z]+.
+     * @return playfair cipher key generated using {@code keyword}.
+     */
+    public static String generateKey(String keyword) {
+        ArrayList<Character> key = new ArrayList<>();
 
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
-                if (key[i][j] == a) {
-                    aRow = i;
-                    aColumn = j;
-                }
+        for (int i = 0; i < keyword.length(); i++) {
+            char c = keyword.charAt(i);
 
-                if (key[i][j] == b) {
-                    bRow = i;
-                    bColumn = j;
-                }
+            if (c == 'J')
+                continue;
 
-            }
-        }
-        if (aRow == bRow) {
-            return new char[]{key[aRow][(aColumn + 1) % 5], key[bRow][(bColumn + 1) % 5]};
-        } else if (aColumn == bColumn) {
-            return new char[]{key[(aRow + 1) % 5][aColumn], key[(bRow + 1) % 5][bColumn]};
-        } else {
-            return new char[]{key[aRow][bColumn], key[bRow][aColumn]};
-        }
-    }
+            if (key.contains(c))
+                continue;
 
-    private char[] decrypt(char a, char b) {
-        int aRow = 0;
-        int aColumn = 0;
-        int bRow = 0;
-        int bColumn = 0;
-
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
-                if (key[i][j] == a) {
-                    aRow = i;
-                    aColumn = j;
-                }
-
-                if (key[i][j] == b) {
-                    bRow = i;
-                    bColumn = j;
-                }
-
-            }
+            key.add(c);
         }
 
-        if (aRow == bRow) {
-            return new char[]{key[aRow][Math.floorMod(aColumn - 1, 5)], key[bRow][Math.floorMod(bColumn - 1, 5)]};
-        } else if (aColumn == bColumn) {
-            return new char[]{key[Math.floorMod(aRow - 1, 5)][aColumn], key[Math.floorMod(bRow - 1, 5)][bColumn]};
-        } else {
-            return new char[]{key[aRow][bColumn], key[bRow][aColumn]};
-        }
-    }
+        for (int i = 0; i < 26; i++) {
+            char c = (char) (i + 'A');
 
-    public String toString() {
+            if (c == 'J')
+                continue;
+
+            if (key.contains(c))
+                continue;
+
+            key.add(c);
+        }
+
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
-                sb.append(key[i][j]);
-            }
+        for (char ch : key) {
+            sb.append(ch);
+        }
+
+        return sb.toString();
+    }
+
+    public static String generateKey() {
+        ArrayList<Character> key = new ArrayList<>(Arrays.asList('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K',
+                'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'));
+
+        Collections.shuffle(key);
+
+        StringBuilder sb = new StringBuilder();
+
+        for (Character ch : key) {
+            sb.append(ch);
         }
 
         return sb.toString();

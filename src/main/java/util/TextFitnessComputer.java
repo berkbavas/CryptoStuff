@@ -8,15 +8,14 @@ import java.util.List;
 import java.util.Map;
 
 public class TextFitnessComputer {
+    private final static String PATH = TextFitnessComputer.class.getResource("../quadgram_scores.txt").getPath();
     private static TextFitnessComputer instance = new TextFitnessComputer();
     private Map<String, Double> words = new HashMap<>();
-    private int gramLength = 4;
     private double defaultScore = 0;
-    private String path = TextFitnessComputer.class.getResource("../quadgram_scores.txt").getPath();
 
     private TextFitnessComputer() {
         try {
-            List<String> list = Files.readAllLines(new File(path).toPath());
+            List<String> list = Files.readAllLines(new File(PATH).toPath());
             double totalScore = 0;
             for (String line : list) {
                 String[] arr = line.split(" ");
@@ -41,12 +40,10 @@ public class TextFitnessComputer {
     }
 
     public double computeScore(String text) {
-        text = text.toUpperCase().trim();
         double score = 0;
-        for (int i = 0; i < text.length() - (gramLength - 1); i++) {
-            score += words.getOrDefault(text.substring(i, i + gramLength), defaultScore);
+        for (int i = 0; i < text.length() - 3; i++) {
+            score += words.getOrDefault(text.substring(i, i + 4), defaultScore);
         }
-
         return score;
     }
 

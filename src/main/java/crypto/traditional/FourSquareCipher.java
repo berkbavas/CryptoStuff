@@ -1,124 +1,91 @@
 package crypto.traditional;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-
-public class FourSquareCipher {
+public final class FourSquareCipher {
     private final static String ALPHABET = "ABCDEFGHIKLMNOPQRSTUVWXYZ";
-    private String[] keys = new String[2];
 
-    public FourSquareCipher() {
-        for (int i = 0; i < keys.length; i++) {
-            ArrayList<Character> key = new ArrayList<>(Arrays.asList('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K',
-                    'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'));
-
-            Collections.shuffle(key);
-            StringBuilder sb = new StringBuilder();
-            for (char ch : key) {
-                sb.append(ch);
-            }
-            keys[i] = sb.toString();
-        }
-    }
-
-    public FourSquareCipher(String[] keywords) {
-        if (keywords.length != 2)
-            throw new IllegalArgumentException(String.format("There must be two keywords but provided %d.", keywords.length));
-
-        for (String keyword : keywords) {
-            if (keyword.isEmpty())
-                throw new IllegalArgumentException("Keyword cannot be empty.");
-
-            if (!keyword.matches("[A-IK-Z]+")) {
-                throw new IllegalArgumentException("Keyword contains a character out of the range [A-IK-Z]. Keyword is " + keyword);
-            }
-        }
-
-        for (int i = 0; i < keys.length; i++) {
-            ArrayList<Character> key = new ArrayList<>();
-
-            for (char ch : keywords[i].toCharArray()) {
-                if (key.contains(ch))
-                    continue;
-
-                key.add(ch);
-            }
-
-            for (char ch = 'A'; ch <= 'Z'; ch++) {
-                if (ch == 'J')
-                    continue;
-
-                if (key.contains(ch))
-                    continue;
-
-                key.add(ch);
-            }
-
-            StringBuilder sb = new StringBuilder();
-            for (char ch : key) {
-                sb.append(ch);
-            }
-            keys[i] = sb.toString();
-        }
+    private FourSquareCipher() {
 
     }
 
-    public String encrypt(String plaintext) {
-        if (plaintext.length() == 0)
-            return "";
-
-        if (plaintext.length() % 2 != 0)
-            throw new IllegalArgumentException("Length of the plaintext must be even.");
-
-        if (!plaintext.matches("[A-IK-Z]+"))
-            throw new IllegalArgumentException("Plaintext contains a character out of the range [A-IK-Z].");
-
+    /**
+     * @param plaintext must be in [A-IK-Z]+, length of {@code plaintext} must be even
+     *                  and plaintext must not contain two identical consecutive letters.
+     * @param key       {@code key.length} must be 2, {@code key[0]} and {@code key[1]}}
+     *                  must be permutation of letters in [A-IK-Z].
+     * @return encryption of {@code plaintext} under the {@code key}.
+     */
+    public static String encrypt(String plaintext, String[] key) {
         StringBuilder ciphertext = new StringBuilder();
-        int aIndex, bIndex, aRow, aColumn, bRow, bColumn;
+
         for (int i = 0; i < plaintext.length(); i += 2) {
-            aIndex = ALPHABET.indexOf(plaintext.charAt(i));
-            bIndex = ALPHABET.indexOf(plaintext.charAt(i + 1));
-            aRow = aIndex / 5;
-            bRow = bIndex / 5;
-            aColumn = aIndex % 5;
-            bColumn = bIndex % 5;
-            ciphertext.append(keys[0].charAt(5 * aRow + bColumn));
-            ciphertext.append(keys[1].charAt(5 * bRow + aColumn));
+            char a = plaintext.charAt(i);
+            char b = plaintext.charAt(i + 1);
+
+            int ai = ALPHABET.indexOf(a);
+            int bi = ALPHABET.indexOf(b);
+
+            int ar = ai / 5;
+            int ac = ai % 5;
+            int br = bi / 5;
+            int bc = bi % 5;
+
+            ciphertext.append(key[0].charAt(5 * ar + bc));
+            ciphertext.append(key[1].charAt(5 * br + ac));
         }
 
         return ciphertext.toString();
     }
 
-    public String decrypt(String ciphertext) {
-        if (ciphertext.length() == 0)
-            return "";
 
-        if (ciphertext.length() % 2 != 0)
-            throw new IllegalArgumentException("Length of the ciphertext must be even.");
-
-        if (!ciphertext.matches("[A-IK-Z]+"))
-            throw new IllegalArgumentException("Ciphertext contains a character out of the range [A-IK-Z].");
-
+    /**
+     * @param ciphertext must be in [A-IK-Z]+, length of {@code plaintext} must be even
+     *                   and plaintext must not contain two identical consecutive letters.
+     * @param key        {@code key.length} must be 2, {@code key[0]} and {@code key[1]}}
+     *                   must be permutation of letters in [A-IK-Z].
+     * @return decryption of {@code ciphertext} under the {@code key}.
+     */
+    public static String decrypt(String ciphertext, String[] key) {
         StringBuilder plaintext = new StringBuilder();
 
-        int aIndex, bIndex, aRow, aColumn, bRow, bColumn;
         for (int i = 0; i < ciphertext.length(); i += 2) {
-            aIndex = keys[0].indexOf(ciphertext.charAt(i));
-            bIndex = keys[1].indexOf(ciphertext.charAt(i + 1));
-            aRow = aIndex / 5;
-            aColumn = aIndex % 5;
-            bRow = bIndex / 5;
-            bColumn = bIndex % 5;
-            plaintext.append(ALPHABET.charAt(5 * aRow + bColumn));
-            plaintext.append(ALPHABET.charAt(5 * bRow + aColumn));
+            char a = ciphertext.charAt(i);
+            char b = ciphertext.charAt(i + 1);
+
+            int ai = key[0].indexOf(a);
+            int bi = key[1].indexOf(b);
+
+            int ar = ai / 5;
+            int ac = ai % 5;
+            int br = bi / 5;
+            int bc = bi % 5;
+
+            plaintext.append(ALPHABET.charAt(5 * ar + bc));
+            plaintext.append(ALPHABET.charAt(5 * br + ac));
         }
 
         return plaintext.toString();
     }
 
-    public String toString() {
-        return keys[0] + ":" + keys[1];
+    /**
+     * @param keywords to generate four-square key.
+     * @return four-square cipher key generated using {@code keywords}.
+     */
+    public static String[] generateKey(String[] keywords) {
+        String[] key = new String[2];
+
+        key[0] = PlayfairCipher.generateKey(keywords[0]);
+        key[1] = PlayfairCipher.generateKey(keywords[1]);
+
+        return key;
+    }
+
+    public static String[] generateKey() {
+        String[] key = new String[2];
+
+        key[0] = PlayfairCipher.generateKey();
+        key[1] = PlayfairCipher.generateKey();
+
+        return key;
     }
 
 }
