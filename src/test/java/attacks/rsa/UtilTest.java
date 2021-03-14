@@ -24,13 +24,11 @@ class UtilTest {
             assertEquals(new BigInteger(String.valueOf(i)), Util.findRoot(m, 2, 0.1));
         }
 
-
         {
             BigInteger m = new BigInteger("2");
             assertEquals(new BigInteger("2"), Util.findRoot(m, 1, 0.1));
             assertEquals(new BigInteger("1"), Util.findRoot(m, 2, 0.1));
         }
-
 
         {
             BigInteger m = new BigInteger("10");
@@ -38,7 +36,6 @@ class UtilTest {
             assertEquals(new BigInteger("2"), Util.findRoot(m, 3, 0.1));
             assertEquals(new BigInteger("2"), Util.findRoot(m, 4, 0.1));
         }
-
 
         {
             BigInteger m = new BigInteger("10000");
@@ -52,7 +49,6 @@ class UtilTest {
             assertEquals(new BigInteger("100"), Util.findRoot(m, 2, 0.0000001));
         }
 
-
         {
             BigInteger m = new BigInteger("256");
             assertEquals(new BigInteger("16"), Util.findRoot(m, 2, 0.1));
@@ -60,12 +56,10 @@ class UtilTest {
             assertEquals(new BigInteger("2"), Util.findRoot(m, 8, 0.1));
         }
 
-
         {
             BigInteger m = new BigInteger("-729");
             assertEquals(new BigInteger("-9"), Util.findRoot(m, 3, 0.1));
         }
-
 
         {
             BigInteger m = new BigInteger("-27");
@@ -98,7 +92,6 @@ class UtilTest {
             BigInteger m = x.multiply(x).subtract(BigInteger.ONE);
             assertEquals(x, Util.findRoot(m, 2, 0.1));
         }
-
 
         {
             BigInteger x = new BigInteger(128, random).abs();
@@ -137,7 +130,6 @@ class UtilTest {
         assertThrows(IllegalArgumentException.class, () -> {
             Util.findRoot(new BigInteger("-1"), 4, 0.01);
         });
-
 
         assertThrows(IllegalArgumentException.class, () -> {
             Util.findRoot(new BigInteger("1"), -1, 0.01);

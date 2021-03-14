@@ -3,6 +3,7 @@ package crypto.traditional;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class FourSquareCipherTest {
 
@@ -49,5 +50,18 @@ class FourSquareCipherTest {
             String ciphertext = "EYMQLXLNNR";
             assertEquals("HELXOWORLD", FourSquareCipher.decrypt(ciphertext, key));
         }
+    }
+
+    @Test
+    void sanitize() {
+        String text = "In computing, plain text is a loose term for data (e.g. file contents) that represent only characters of readable material but not its graphical representation nor other objects (floating-point numbers, images, etc.).";
+        String sanitized = "INCOMPUTINGPLAINTEXTISALOOSETERMFORDATAEGFILECONTENTSTHATREPRESENTONLYCHARACTERSOFREADABLEMATERIALBUTNOTITSGRAPHICALREPRESENTATIONNOROTHEROBECTSFLOATINGPOINTNUMBERSIMAGESETC";
+        assertEquals(0, FourSquareCipher.sanitize(text).compareTo(sanitized));
+    }
+
+    @Test
+    void keyValidation() {
+        String[] key = FourSquareCipher.generateKey();
+        assertTrue(FourSquareCipher.isKeyValid(key));
     }
 }

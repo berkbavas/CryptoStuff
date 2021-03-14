@@ -23,7 +23,6 @@ class RSASignatureWithoutPaddingAttackTest {
     }
 
     private static boolean isOdd(byte[] input) {
-
         return (input[input.length - 1] & 0x01) == 1;
     }
 

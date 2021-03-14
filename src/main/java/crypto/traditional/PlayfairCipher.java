@@ -9,6 +9,48 @@ public final class PlayfairCipher {
     private PlayfairCipher() {
     }
 
+    public static String sanitize(String text) {
+        text = text.toUpperCase();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < text.length(); i++) {
+            char c = text.charAt(i);
+            if (('A' <= c && c <= 'I') || ('K' <= c && c <= 'Z')) {
+                sb.append(c);
+            }
+
+        }
+
+        return sb.toString();
+    }
+
+    public static boolean isKeyValid(String key) {
+        if (key.length() != 25)
+            return false;
+
+        boolean[] freq = new boolean[25];
+
+        for (int i = 0; i < 25; i++) {
+            char c = key.charAt(i);
+
+            if (c == 'J')
+                return false;
+
+            if (c < 'A' || 'Z' < c)
+                return false;
+
+            freq[c <= 'I' ? c - 'A' : c - 'A' - 1] = true;
+
+        }
+
+        for (boolean b : freq) {
+            if (!b)
+                return false;
+        }
+
+        return true;
+    }
+
+
     /**
      * @param plaintext must be in [A-IK-Z]+, length of {@code plaintext} must be even
      *                  and plaintext must not contain two identical consecutive letters.

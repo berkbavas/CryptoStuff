@@ -12,13 +12,12 @@ class MillerFactorizationTest {
 
     @Test
     void factorize() {
-
         int[] bitLengths = {256, 512, 1024, 2048, 4096};
 
-        System.out.println("------------------- MillerFactorization.java -------------------");
+        System.out.println("MillerFactorizationTest.java: Test is started.");
 
         for (int bitLength : bitLengths) {
-            System.out.println("Generating " + bitLength + "-bit RSA Key...");
+            System.out.println("MillerFactorizationTest.java: Generating " + bitLength + "-bit RSA Key...");
             RSAKeyPair keyPair = RSAKeyGenerator.generate(bitLength, 65537);
 
             BigInteger N = keyPair.getPublicKey().getModulus();
@@ -37,11 +36,11 @@ class MillerFactorizationTest {
                 primes[0] = q;
             }
 
-            System.out.println("Factorizing...");
+            System.out.println("MillerFactorizationTest.java: Factorizing...");
 
             BigInteger[] factors = MillerFactorization.factorize(N, e, d);
 
-            System.out.println("Miller Factorization is done.\n");
+            System.out.println("MillerFactorizationTest.java: Miller Factorization is done.");
 
             assertEquals(primes[0], factors[0]);
             assertEquals(primes[1], factors[1]);

@@ -7,6 +7,17 @@ public final class FourSquareCipher {
 
     }
 
+    public static String sanitize(String text) {
+        return PlayfairCipher.sanitize(text);
+    }
+
+    public static boolean isKeyValid(String[] key) {
+        if (key.length != 2)
+            return false;
+
+        return PlayfairCipher.isKeyValid(key[0]) && PlayfairCipher.isKeyValid(key[1]);
+    }
+
     /**
      * @param plaintext must be in [A-IK-Z]+, length of {@code plaintext} must be even
      *                  and plaintext must not contain two identical consecutive letters.

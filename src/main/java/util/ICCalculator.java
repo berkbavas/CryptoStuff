@@ -2,6 +2,10 @@ package util;
 
 import java.util.HashMap;
 
+/**
+ * Index of coincidence calculator
+ */
+
 public final class ICCalculator {
 
     private ICCalculator() {

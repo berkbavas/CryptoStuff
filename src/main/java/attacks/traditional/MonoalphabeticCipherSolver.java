@@ -1,4 +1,5 @@
 package attacks.traditional;
+
 import crypto.traditional.MonoalphabeticCipher;
 import util.TextFitnessCalculator;
 
