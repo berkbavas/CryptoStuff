@@ -7,7 +7,6 @@ import java.util.Collections;
 public final class MonoalphabeticCipher {
 
     private MonoalphabeticCipher() {
-
     }
 
     /**

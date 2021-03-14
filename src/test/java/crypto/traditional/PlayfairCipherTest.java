@@ -28,7 +28,6 @@ class PlayfairCipherTest {
     @Test
     void decrypt() {
         String key = PlayfairCipher.generateKey("TESTING");
-        System.out.println(key);
         String ciphertext = "PAKYPVPUMC";
         assertEquals("HELXOWORLD", PlayfairCipher.decrypt(ciphertext, key));
     }

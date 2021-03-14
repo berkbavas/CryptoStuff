@@ -1,28 +1,35 @@
 package util;
 
 public class Stopwatch {
+    private static final double NS_TO_MS = 1.0E-06;
     private long start, elapsed;
     private boolean running, stopped;
+    private boolean precise;
 
     public Stopwatch() {
-        running = false;
-        stopped = true;
-        elapsed = 0;
-        start = 0;
+        precise = false;
+        start();
+    }
+
+    public Stopwatch(boolean precise) {
+        this.precise = precise;
+        start();
     }
 
     public void start() {
-        start = System.nanoTime();
+        start = time();
         elapsed = 0;
         running = true;
         stopped = false;
     }
 
-    public void suspend() {
+    public long suspend() {
         if (running) {
-            elapsed += System.nanoTime() - start;
+            elapsed += time() - start;
             running = false;
         }
+
+        return elapsed;
     }
 
     public void resume() {
@@ -32,22 +39,24 @@ public class Stopwatch {
         if (stopped)
             return;
 
-        start = System.nanoTime();
+        start = time();
         running = true;
     }
 
-    public void stop() {
+    public long stop() {
         if (running) {
-            elapsed += System.nanoTime() - start;
+            elapsed += time() - start;
         }
 
         running = false;
         stopped = true;
+
+        return elapsed;
     }
 
-    public long getCurrentElapsed() {
+    public long elapsed() {
         if (running)
-            return elapsed + System.nanoTime() - start;
+            return elapsed + time() - start;
         else
             return elapsed;
     }
@@ -57,8 +66,14 @@ public class Stopwatch {
     }
 
     public String toString() {
-        long ms = getCurrentElapsed() / 1000000;
-        return "Elapsed time is " + ms + " ms.";
+        return String.format("%d %s", elapsed(), precise ? "ns" : "ms");
+    }
+
+    private long time() {
+        if (precise)
+            return System.nanoTime();
+        else
+            return (long) (System.nanoTime() * NS_TO_MS);
     }
 
 }
