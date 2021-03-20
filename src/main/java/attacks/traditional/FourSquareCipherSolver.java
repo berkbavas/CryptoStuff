@@ -8,6 +8,9 @@ import java.security.SecureRandom;
 public class FourSquareCipherSolver {
     static SecureRandom secureRandom = new SecureRandom();
 
+    private FourSquareCipherSolver() {
+    }
+
     public static String[] findKey(String ciphertext) {
         String[] key = FourSquareCipher.generateKey();
         String text = FourSquareCipher.decrypt(ciphertext, key);

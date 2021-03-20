@@ -9,7 +9,6 @@ import java.util.HashMap;
 public final class ICCalculator {
 
     private ICCalculator() {
-
     }
 
     public static double calculate(String text, int period) {

@@ -4,7 +4,6 @@ public final class FourSquareCipher {
     private final static String ALPHABET = "ABCDEFGHIKLMNOPQRSTUVWXYZ";
 
     private FourSquareCipher() {
-
     }
 
     public static String sanitize(String text) {
