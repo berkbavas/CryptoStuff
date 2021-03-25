@@ -5,7 +5,7 @@ import util.TextFitnessCalculator;
 
 import java.security.SecureRandom;
 
-public class FourSquareCipherSolver {
+public final class FourSquareCipherSolver {
     static SecureRandom secureRandom = new SecureRandom();
 
     private FourSquareCipherSolver() {

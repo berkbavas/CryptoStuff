@@ -13,13 +13,13 @@ public final class VigenereCipher {
     public static String encrypt(String plaintext, String key) {
         StringBuilder ciphertext = new StringBuilder();
 
-        if (!check(key))
+        if (check(key))
             throw new IllegalArgumentException("Key must be in [A-Z]+.");
 
         for (int i = 0; i < plaintext.length(); i++) {
             int charValue = plaintext.charAt(i) - 'A';
 
-            if (!check(charValue))
+            if (check(charValue))
                 throw new IllegalArgumentException("Plaintext must be in [A-Z]+.");
 
             int keyValue = key.charAt(i % key.length()) - 'A';
@@ -38,13 +38,13 @@ public final class VigenereCipher {
     public static String decrypt(String ciphertext, String key) {
         StringBuilder plaintext = new StringBuilder();
 
-        if (!check(key))
+        if (check(key))
             throw new IllegalArgumentException("Key must be in [A-Z]+.");
 
         for (int i = 0; i < ciphertext.length(); i++) {
             int charValue = ciphertext.charAt(i) - 'A';
 
-            if (!check(charValue))
+            if (check(charValue))
                 throw new IllegalArgumentException("Ciphertext must be in [A-Z]+.");
 
             int keyValue = key.charAt(i % key.length()) - 'A';
@@ -65,17 +65,17 @@ public final class VigenereCipher {
     }
 
     private static boolean check(int value) {
-        return 0 <= value && value <= 25;
+        return 0 > value || value > 25;
     }
 
     private static boolean check(String text) {
         for (int i = 0; i < text.length(); i++) {
             int value = text.charAt(i) - 'A';
-            if (!check(value))
-                return false;
+            if (check(value))
+                return true;
         }
 
-        return true;
+        return false;
     }
 
 }
