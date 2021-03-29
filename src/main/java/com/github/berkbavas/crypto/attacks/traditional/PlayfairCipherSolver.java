@@ -6,7 +6,7 @@ import com.github.berkbavas.crypto.util.TextFitnessCalculator;
 import java.security.SecureRandom;
 
 public final class PlayfairCipherSolver {
-    static SecureRandom secureRandom = new SecureRandom();
+    static SecureRandom random = new SecureRandom();
 
     private PlayfairCipherSolver() {
     }
@@ -28,7 +28,7 @@ public final class PlayfairCipherSolver {
                     key = candidateKey;
                     bestScore = score;
                 } else if (t > 0) {
-                    if (Math.exp(dF / t) > secureRandom.nextDouble()) {
+                    if (Math.exp(dF / t) > random.nextDouble()) {
                         key = candidateKey;
                         bestScore = score;
                     }
@@ -122,6 +122,6 @@ public final class PlayfairCipherSolver {
     }
 
     public static int random(int bound) {
-        return secureRandom.nextInt(bound);
+        return random.nextInt(bound);
     }
 }

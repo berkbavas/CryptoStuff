@@ -20,11 +20,8 @@ class WeakRSASolverTest {
             System.out.println("WeakRSASolverTest.java: Prime numbers have been generated.");
             System.out.println("WeakRSASolverTest.java: Difference is " + primes[0].subtract(primes[1]).abs() + ".");
             BigInteger N = primes[0].multiply(primes[1]);
-
             System.out.println("WeakRSASolverTest.java: Weak RSA Solver is called.");
-
             BigInteger[] factors = WeakRSASolver.factorize(N);
-
             System.out.println("WeakRSASolverTest.java: Weak RSA Solver is done.");
 
             assertEquals(primes[0], factors[0]);

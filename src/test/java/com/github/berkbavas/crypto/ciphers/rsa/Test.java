@@ -41,7 +41,6 @@ public class Test {
         {
             System.out.println("------------ Test 4: 4096-bit RSA Key with e = 65537 ------------");
             f(4096, 65537);
-            System.out.println();
         }
 
     }

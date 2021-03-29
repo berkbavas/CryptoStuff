@@ -41,7 +41,7 @@ class VigenereCipherSolverTest {
         }
 
         System.out.println(String.format("VigenereCipherSolverTest.java: " +
-                "%d successful com.github.berkbavas.com.github.berkbavas.crypto.crypto.attacks out of %d tries.", success, numberOfAttacks));
+                "%d successful attacks out of %d tries.", success, numberOfAttacks));
 
         assertTrue(success > numberOfAttacks * 0.5);
     }

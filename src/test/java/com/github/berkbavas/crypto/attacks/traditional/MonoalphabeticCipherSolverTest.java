@@ -30,13 +30,14 @@ class MonoalphabeticCipherSolverTest {
             if (plaintext.compareTo(decrypted) == 0)
                 success++;
             double score = TextFitnessCalculator.calculate(decrypted);
-            System.out.println(String.format("MonoalphabeticCipherSolverTest.java: " +
-                            "[%2d / %2d] \t [%d ms] \t Score: %f \t Found Key: %s \t Decrypted Text: %.100s",
-                    success, i + 1, sw.elapsed(), score, foundKey, decrypted));
+            System.out.printf("MonoalphabeticCipherSolverTest.java: " +
+                            "[%2d / %2d] \t [%d ms] \t Score: %f \t Found Key: %s \t Decrypted Text: %.100s%n",
+                    success, i + 1, sw.elapsed(), score, foundKey, decrypted);
         }
 
-        System.out.println(String.format("MonoalphabeticCipherSolverTest.java: " +
-                "%d successful com.github.berkbavas.com.github.berkbavas.crypto.crypto.attacks out of %d tries. Each execution took %.0f ms on average.", success, numberOfAttacks, elapsed / numberOfAttacks));
+        System.out.printf("MonoalphabeticCipherSolverTest.java: " +
+                "%d successful attacks out of %d tries. " +
+                "Each execution took %.0f ms on average.%n", success, numberOfAttacks, elapsed / numberOfAttacks);
 
         assertTrue(success > numberOfAttacks * 0.5);
     }

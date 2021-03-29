@@ -9,30 +9,30 @@ import java.util.List;
 import java.util.Map;
 
 public final class TextFitnessCalculator {
-    private static final URL path = TextFitnessCalculator.class.getResource("/quadgram_scores.txt");
-    private static final Map<String, Double> words = new HashMap<>();
-    private static double defaultScore = 0;
+    private static final URL PATH = TextFitnessCalculator.class.getResource("/quadgram_scores.txt");
+    private static final Map<String, Double> WORDS = new HashMap<>();
+    private static final double DEFAULT_SCORE;
 
     static {
-        if (path == null) {
-            throw new RuntimeException("\"quadgram_scores.txt\" is not found.");
+        if (PATH == null) {
+            throw new RuntimeException("'quadgram_scores.txt' is not found.");
         }
 
         try {
-            List<String> lines = Files.readAllLines(new File(path.getPath()).toPath());
+            List<String> lines = Files.readAllLines(new File(PATH.getPath()).toPath());
             double totalScore = 0;
 
             for (String line : lines) {
                 String[] arr = line.split(" ");
-                words.put(arr[0], Double.valueOf(arr[1]));
+                WORDS.put(arr[0], Double.valueOf(arr[1]));
                 totalScore += Double.parseDouble(arr[1]);
             }
 
-            for (Map.Entry<String, Double> entry : words.entrySet()) {
+            for (Map.Entry<String, Double> entry : WORDS.entrySet()) {
                 entry.setValue(Math.log(entry.getValue() / totalScore));
             }
 
-            defaultScore = Math.log(1 / totalScore);
+            DEFAULT_SCORE = Math.log(1 / totalScore);
 
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage());
@@ -45,8 +45,12 @@ public final class TextFitnessCalculator {
     public static double calculate(String text) {
         double score = 0;
         for (int i = 0; i < text.length() - 3; i++) {
-            score += words.getOrDefault(text.substring(i, i + 4), defaultScore);
+            score += WORDS.getOrDefault(text.substring(i, i + 4), DEFAULT_SCORE);
         }
         return score;
+    }
+
+    public static double getDefaultScore() {
+        return DEFAULT_SCORE;
     }
 }

@@ -4,7 +4,7 @@ public class Stopwatch {
     private static final double NS_TO_MS = 1.0E-06;
     private long start, elapsed;
     private boolean running, stopped;
-    private boolean precise;
+    private final boolean precise;
 
     public Stopwatch() {
         precise = false;

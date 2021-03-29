@@ -21,11 +21,8 @@ class FermatFactorizationTest {
             System.out.println("FermatFactorizationTest.java: Prime numbers have been generated.");
             System.out.println("FermatFactorizationTest.java: Difference is " + primes[0].subtract(primes[1]).abs() + ".");
             BigInteger N = primes[0].multiply(primes[1]);
-
             System.out.println("FermatFactorizationTest.java: Fermat Factorization is called.");
-
             BigInteger[] factors = FermatFactorization.factorize(N);
-
             System.out.println("FermatFactorizationTest.java: Fermat Factorization is done.");
 
             assertEquals(primes[0], factors[0]);

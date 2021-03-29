@@ -37,9 +37,7 @@ class MillerFactorizationTest {
             }
 
             System.out.println("MillerFactorizationTest.java: Factorizing...");
-
             BigInteger[] factors = MillerFactorization.factorize(N, e, d);
-
             System.out.println("MillerFactorizationTest.java: Miller Factorization is done.");
 
             assertEquals(primes[0], factors[0]);
