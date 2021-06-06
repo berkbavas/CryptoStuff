@@ -1,7 +1,8 @@
 # Cryptographic Algorithms and Attacks
 This repository consists of implementation of some cryptographic algorithms and attacks.
-The code is written in Java 8.
-The code is self-explanatory and contains some comments for the necessary lines.
+The code is written in Java 8, it is self-explanatory and contains some comments for the necessary lines.
+I used the ideas explained [here](http://practicalcryptography.com/cryptanalysis/)
+for the attacks on traditional ciphers.
 
 - Algorithms
     - Asymmetric Cipher
