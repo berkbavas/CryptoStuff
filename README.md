@@ -33,4 +33,3 @@ commands in order to compile the project and run the tests.
     
   ## Acknowledgment
 - I follow the ideas for implementing the attacks on traditional ciphers described here: http://practicalcryptography.com/cryptanalysis/
-- 
