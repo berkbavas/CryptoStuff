@@ -35,4 +35,4 @@ commands in order to compile the project and run the tests.
 https://github.com/user-attachments/assets/d09b1dd9-4022-4f5c-987e-0e9aeb3ed72a
 
 ## Acknowledgement
-- I follow the ideas for implementing the attacks on traditional ciphers described here: http://practicalcryptography.com/cryptanalysis/
+- I implement the attacks on traditional ciphers by following the solution presented here: http://practicalcryptography.com/cryptanalysis/
