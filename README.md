@@ -34,5 +34,5 @@ commands in order to compile the project and run the tests.
 ## Tests
 https://github.com/user-attachments/assets/d09b1dd9-4022-4f5c-987e-0e9aeb3ed72a
 
-## Acknowledgment
+## Acknowledgement
 - I follow the ideas for implementing the attacks on traditional ciphers described here: http://practicalcryptography.com/cryptanalysis/
