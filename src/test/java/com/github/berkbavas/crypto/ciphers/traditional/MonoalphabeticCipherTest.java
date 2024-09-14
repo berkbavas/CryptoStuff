@@ -19,14 +19,12 @@ class MonoalphabeticCipherTest {
 
     }
 
-
     @Test
     void encrypt() {
         String key = "AZERTYUIOPQSDFGHJKLMWXCVBN";
         String plaintext = "HELLOWORLDMONOALPHABETICCIPHERTEST";
         assertEquals("ITSSGCGKSRDGFGASHIAZTMOEEOHITKMTLM", MonoalphabeticCipher.encrypt(plaintext, key));
     }
-
 
     @Test
     void decrypt() {

@@ -38,9 +38,7 @@ public class Util {
 
         int value = lastBlock[15] & 0xff;
         byte[] unpadded = new byte[16 - value];
-        for (int i = 0; i < unpadded.length; i++) {
-            unpadded[i] = lastBlock[i];
-        }
+        System.arraycopy(lastBlock, 0, unpadded, 0, unpadded.length);
 
         byte[] result = new byte[data.length - 16 + unpadded.length];
 

@@ -1,9 +1,9 @@
 package com.github.berkbavas.crypto.attacks.traditional;
 
 import com.github.berkbavas.crypto.ciphers.traditional.VigenereCipher;
-import org.junit.jupiter.api.Test;
 import com.github.berkbavas.crypto.util.Stopwatch;
 import com.github.berkbavas.crypto.util.TextFitnessCalculator;
+import org.junit.jupiter.api.Test;
 
 import java.security.SecureRandom;
 
@@ -35,13 +35,13 @@ class VigenereCipherSolverTest {
             if (plaintext.compareTo(decrypted) == 0)
                 success++;
 
-            System.out.println(String.format("VigenereCipherSolverTest.java: " +
-                            "[%2d / %2d] \t [%d ms] \t Score: %f \t Found Key: %-10s \t Actual Key: %-10s \t Decrypted Text: %.100s",
-                    success, i + 1, sw.elapsed(), score, foundKey, key, decrypted));
+            System.out.printf("VigenereCipherSolverTest.java: " +
+                            "[%2d / %2d] \t [%d ms] \t Score: %f \t Found Key: %-10s \t Actual Key: %-10s \t Decrypted Text: %.100s%n",
+                    success, i + 1, sw.elapsed(), score, foundKey, key, decrypted);
         }
 
-        System.out.println(String.format("VigenereCipherSolverTest.java: " +
-                "%d successful attacks out of %d tries.", success, numberOfAttacks));
+        System.out.printf("VigenereCipherSolverTest.java: " +
+                "%d successful attacks out of %d tries.%n", success, numberOfAttacks);
 
         assertTrue(success > numberOfAttacks * 0.5);
     }

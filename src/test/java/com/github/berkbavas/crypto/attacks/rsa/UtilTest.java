@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class UtilTest {
-    private static SecureRandom random = new SecureRandom();
+    private static final SecureRandom RANDOM_GENERATOR = new SecureRandom();
 
     @Test
     void findRootWhenInputIsSmall() {
@@ -74,13 +74,13 @@ class UtilTest {
         int[] bitLengths = {32, 64, 128, 256, 512, 768, 1024, 2048, 3072, 4096};
 
         for (int i = 0; i < bitLengths.length; i++) {
-            BigInteger x = new BigInteger(bitLengths[i], random).abs();
+            BigInteger x = new BigInteger(bitLengths[i], RANDOM_GENERATOR).abs();
             BigInteger m = x.multiply(x);
             assertEquals(x, Util.findRoot(m, 2, 0.1));
         }
 
         for (int i = 0; i < bitLengths.length; i++) {
-            BigInteger x = new BigInteger(bitLengths[i], random).abs();
+            BigInteger x = new BigInteger(bitLengths[i], RANDOM_GENERATOR).abs();
             BigInteger m = x.multiply(x).add(BigInteger.ONE);
             assertEquals(x, Util.findRoot(m, 2, 0.1));
 
@@ -88,13 +88,13 @@ class UtilTest {
 
         for (int i = 0; i < bitLengths.length; i++) {
 
-            BigInteger x = new BigInteger(bitLengths[i], random).abs();
+            BigInteger x = new BigInteger(bitLengths[i], RANDOM_GENERATOR).abs();
             BigInteger m = x.multiply(x).subtract(BigInteger.ONE);
             assertEquals(x, Util.findRoot(m, 2, 0.1));
         }
 
         {
-            BigInteger x = new BigInteger(128, random).abs();
+            BigInteger x = new BigInteger(128, RANDOM_GENERATOR).abs();
             BigInteger m = x.multiply(x);
             assertEquals(x, Util.findRoot(m, 2, 0.1));
             assertEquals(x, Util.findRoot(m, 2, 0.01));
@@ -104,7 +104,7 @@ class UtilTest {
         }
 
         {
-            BigInteger x = new BigInteger(256, random).abs();
+            BigInteger x = new BigInteger(256, RANDOM_GENERATOR).abs();
             BigInteger m = x;
 
             for (int i = 2; i < 10; i++) {
@@ -112,9 +112,7 @@ class UtilTest {
                 assertEquals(x, Util.findRoot(m, i, 0.1));
             }
         }
-
     }
-
 
     @Test
     void findRootShouldThrownExceptionWhenArgumentsAreIllegal() {

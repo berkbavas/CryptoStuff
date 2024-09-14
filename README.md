@@ -1,4 +1,5 @@
 # Cryptographic Algorithms and Attacks
+
 This repository consists of implementation of some cryptographic algorithms and attacks.
 The code is written in Java 8, it is self-explanatory and contains some comments for the necessary lines.
 I used the ideas explained [here](http://practicalcryptography.com/cryptanalysis/)
@@ -12,7 +13,7 @@ for the attacks on traditional ciphers.
         - Monoalphabetic
         - Playfair
         - Vigenere
-    
+
 - Attacks
     - CBC Padding Oracle Attack
     - RSA
@@ -22,10 +23,10 @@ for the attacks on traditional ciphers.
         - An Attack for RSA Signature Without Any Padding Scheme
         - Close Primes
     - Attacks on Traditional Ciphers
-      - Four Square
-      - Monoalphabetic
-      - Playfair
-      - Vigenere
+        - Four Square
+        - Monoalphabetic
+        - Playfair
+        - Vigenere
     
   
     

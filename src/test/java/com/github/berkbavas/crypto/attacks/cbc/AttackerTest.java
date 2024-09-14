@@ -17,6 +17,7 @@ class AttackerTest {
             e.printStackTrace();
         }
         Attacker attacker = new Attacker(oracle);
+        assert ciphertext != null;
         byte[] recovered = attacker.recover(ciphertext);
         assertArrayEquals(plaintext.getBytes(), recovered);
     }

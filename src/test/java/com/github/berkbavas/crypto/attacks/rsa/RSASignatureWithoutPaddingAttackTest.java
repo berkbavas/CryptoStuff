@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class RSASignatureWithoutPaddingAttackTest {
-    private static SecureRandom random = new SecureRandom();
+    private static final SecureRandom RANDOM_GENERATOR = new SecureRandom();
 
     private static String hex(byte[] bytes) {
         StringBuilder result = new StringBuilder();
@@ -38,7 +38,7 @@ class RSASignatureWithoutPaddingAttackTest {
         for (int i = 0; i < 100; i++) {
             try {
                 byte[] m = new byte[1024];
-                random.nextBytes(m);
+                RANDOM_GENERATOR.nextBytes(m);
                 byte[] hash = MessageDigest.getInstance("SHA-256").digest(m);
                 if (isOdd(hash)) {
                     BigInteger signature = RSASignatureWithoutPaddingAttack.forgeSignature(m);
@@ -56,7 +56,7 @@ class RSASignatureWithoutPaddingAttackTest {
         for (int i = 0; i < 100; i++) {
             try {
                 byte[] randomBytes = new byte[1024];
-                random.nextBytes(randomBytes);
+                RANDOM_GENERATOR.nextBytes(randomBytes);
                 String message = hex(randomBytes);
                 byte[] hash = MessageDigest.getInstance("SHA-256").digest(message.getBytes(StandardCharsets.UTF_8));
                 if (isOdd(hash)) {
@@ -75,7 +75,7 @@ class RSASignatureWithoutPaddingAttackTest {
         for (int i = 0; i < 100; i++) {
             try {
                 byte[] randomBytes = new byte[1024];
-                random.nextBytes(randomBytes);
+                RANDOM_GENERATOR.nextBytes(randomBytes);
                 byte[] hash = MessageDigest.getInstance("SHA-256").digest(randomBytes);
 
                 if (isOdd(hash))
@@ -96,7 +96,7 @@ class RSASignatureWithoutPaddingAttackTest {
         for (int i = 0; i < 100; i++) {
             try {
                 byte[] randomBytes = new byte[1024];
-                random.nextBytes(randomBytes);
+                RANDOM_GENERATOR.nextBytes(randomBytes);
                 String message = hex(randomBytes);
                 byte[] hash = MessageDigest.getInstance("SHA-256").digest(message.getBytes(StandardCharsets.UTF_8));
                 if (isOdd(hash))

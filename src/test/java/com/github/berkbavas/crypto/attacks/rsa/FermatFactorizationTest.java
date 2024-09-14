@@ -29,6 +29,4 @@ class FermatFactorizationTest {
             assertEquals(primes[1], factors[1]);
         }
     }
-
-
 }

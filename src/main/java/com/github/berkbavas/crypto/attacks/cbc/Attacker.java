@@ -62,10 +62,9 @@ public class Attacker {
 
         } else {
             byte temp = previousBlock[15];
-            previousBlock[15]++;
-            while (!oracle.query(previousBlock, currentBlock)) {
+            do {
                 previousBlock[15]++;
-            }
+            } while (!oracle.query(previousBlock, currentBlock));
             plaintextBlock = recoverBlock(previousBlock, currentBlock);
             plaintextBlock[15] = (byte) (plaintextBlock[15] ^ previousBlock[15] ^ temp);
 

@@ -2,9 +2,9 @@ package com.github.berkbavas.crypto.util;
 
 public class Stopwatch {
     private static final double NS_TO_MS = 1.0E-06;
+    private final boolean precise;
     private long start, elapsed;
     private boolean running, stopped;
-    private final boolean precise;
 
     public Stopwatch() {
         precise = false;

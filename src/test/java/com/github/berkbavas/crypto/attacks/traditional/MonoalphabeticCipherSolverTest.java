@@ -1,9 +1,9 @@
 package com.github.berkbavas.crypto.attacks.traditional;
 
 import com.github.berkbavas.crypto.ciphers.traditional.MonoalphabeticCipher;
-import org.junit.jupiter.api.Test;
 import com.github.berkbavas.crypto.util.Stopwatch;
 import com.github.berkbavas.crypto.util.TextFitnessCalculator;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

@@ -1,9 +1,9 @@
 package com.github.berkbavas.crypto.attacks.traditional;
 
 import com.github.berkbavas.crypto.ciphers.traditional.FourSquareCipher;
-import org.junit.jupiter.api.Test;
 import com.github.berkbavas.crypto.util.Stopwatch;
 import com.github.berkbavas.crypto.util.TextFitnessCalculator;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -24,10 +24,10 @@ class FourSquareCipherSolverTest {
             String text = FourSquareCipher.decrypt(ciphertext, foundKey);
             double score = TextFitnessCalculator.calculate(text);
 
-            System.out.println(String.format("FourSquareCipherSolverTest.java: Score %.2f Decrypted Text: %s", score, text));
+            System.out.printf("FourSquareCipherSolverTest.java: Score %.2f Decrypted Text: %s%n", score, text);
 
             if (plaintext.compareTo(text) == 0) {
-                System.out.println(String.format("FourSquareCipherSolverTest.java: Attack is successful. Execution took %d ms.", sw.elapsed()));
+                System.out.printf("FourSquareCipherSolverTest.java: Attack is successful. Execution took %d ms.%n", sw.elapsed());
                 success = true;
                 break;
             }

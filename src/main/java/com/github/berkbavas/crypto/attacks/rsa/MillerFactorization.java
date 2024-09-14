@@ -10,7 +10,7 @@ import java.security.SecureRandom;
  */
 
 public final class MillerFactorization {
-    private static SecureRandom random = new SecureRandom();
+    private static final SecureRandom SECURE_RANDOM = new SecureRandom();
 
     private MillerFactorization() {
     }
@@ -76,9 +76,9 @@ public final class MillerFactorization {
     public static BigInteger getRandomInteger(BigInteger n1, BigInteger n2) {
         if (n1.signum() != 1 || n2.signum() != 1)
             throw new IllegalArgumentException("n1 and n2 must be positive");
-        BigInteger r = new BigInteger(n2.bitLength() - 1, random);
+        BigInteger r = new BigInteger(n2.bitLength() - 1, SECURE_RANDOM);
         while (r.compareTo(n1) != 1 & r.compareTo(n2) != -1) {
-            r = new BigInteger(n2.bitLength() - 1, random);
+            r = new BigInteger(n2.bitLength() - 1, SECURE_RANDOM);
         }
 
         return r;

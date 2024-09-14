@@ -54,9 +54,8 @@ public class CBCPaddingOracle {
         IvParameterSpec ivParameterSpec = new IvParameterSpec(iv);
         Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
         cipher.init(Cipher.DECRYPT_MODE, key, ivParameterSpec);
-        byte[] plaintext = cipher.doFinal(ciphertext);
 
-        return plaintext;
+        return cipher.doFinal(ciphertext);
     }
 
     public byte[] encrypt(byte[] plaintext) throws Exception {
