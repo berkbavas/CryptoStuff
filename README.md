@@ -1,7 +1,6 @@
 # Cryptographic Algorithms and Attacks
 
-This repository consists of some cryptographic algorithms and attacks.
-The algorithms are written in ``Java 8``.
+The project implements few cryptographic algorithms and attacks in ``Java 8``.
 
 You may use ``mvn compile`` and ``mvn test`` commands in order to run the tests.
 
