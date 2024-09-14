@@ -2,7 +2,8 @@
 
 The project implements few cryptographic algorithms and attacks in ``Java 8``.
 
-You may use ``mvn compile`` and ``mvn test`` commands in order to run the tests.
+You may use ``mvn compile`` and ``mvn test`` 
+commands in order to compile the project and run the tests.
 
 ## Content
 
