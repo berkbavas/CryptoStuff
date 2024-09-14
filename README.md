@@ -1,9 +1,11 @@
 # Cryptographic Algorithms and Attacks
 
-This repository consists of implementation of some cryptographic algorithms and attacks.
-The code is written in Java 8, it is self-explanatory and contains some comments for the necessary lines.
-I used the ideas explained [here](http://practicalcryptography.com/cryptanalysis/)
-for the attacks on traditional ciphers.
+This repository consists of some cryptographic algorithms and attacks.
+The algorithms are written in ``Java 8``.
+
+You may use ``mvn compile`` and ``mvn test`` commands in order to run the tests.
+
+## Content
 
 - Algorithms
     - Asymmetric Cipher
@@ -13,6 +15,7 @@ for the attacks on traditional ciphers.
         - Monoalphabetic
         - Playfair
         - Vigenere
+
 
 - Attacks
     - CBC Padding Oracle Attack
@@ -28,7 +31,6 @@ for the attacks on traditional ciphers.
         - Playfair
         - Vigenere
     
-  
-    
-    
-    
+  ## Acknowledgment
+- I follow the ideas for implementing the attacks on traditional ciphers described here: http://practicalcryptography.com/cryptanalysis/
+- 
