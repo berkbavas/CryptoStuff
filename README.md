@@ -1,38 +1,54 @@
-# Cryptographic Algorithms and Attacks
+# CryptoStuff
 
-The project implements few cryptographic algorithms and attacks in ``Java 8``.
+This project implements various cryptographic algorithms and attacks in **Java 8**.
 
-You may use ``mvn compile`` and ``mvn test`` 
-commands in order to compile the project and run the tests.
+## Features
 
-## Content
+- **Algorithms**
+  - Asymmetric Cipher:
+    - RSA with PKCS1 v1.5 Padding
+  - Traditional Ciphers:
+    - Four Square
+    - Monoalphabetic
+    - Playfair
+    - Vigenere
 
-- Algorithms
-    - Asymmetric Cipher
-        - RSA with PKCS1 v1.5 Padding
-    - Traditional Ciphers
-        - Four Square
-        - Monoalphabetic
-        - Playfair
-        - Vigenere
+- **Attacks**
+  - CBC Padding Oracle Attack
+  - RSA Attacks:
+    - Fermat Factorization
+    - Miller Factorization
+    - Kindle Signature Forgery
+    - Signature Without Padding
+    - Close Primes
+  - Attacks on Traditional Ciphers:
+    - Four Square
+    - Monoalphabetic
+    - Playfair
+    - Vigenere
 
+## Getting Started
 
-- Attacks
-    - CBC Padding Oracle Attack
-    - RSA
-        - Fermat Factorization
-        - Miller Factorization
-        - Kindle Signature Forgery Attack
-        - An Attack for RSA Signature Without Any Padding Scheme
-        - Close Primes
-    - Attacks on Traditional Ciphers
-        - Four Square
-        - Monoalphabetic
-        - Playfair
-        - Vigenere
+Compile the project:
+
+```sh
+mvn compile
+```
+
+Run tests:
+
+```sh
+mvn test
+```
 
 ## Tests
-https://github.com/user-attachments/assets/d09b1dd9-4022-4f5c-987e-0e9aeb3ed72a
 
-## Acknowledgement
-- I implement the attacks on traditional ciphers by following the solution presented here: http://practicalcryptography.com/cryptanalysis/
+Unit tests are provided for all implemented algorithms and attacks. See the `test/` directory for details.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+## Acknowledgements
+
+- Attacks on traditional ciphers are based on solutions from [Practical Cryptography](http://practicalcryptography.com/cryptanalysis/).
