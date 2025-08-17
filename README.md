@@ -51,4 +51,4 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## Acknowledgements
 
-- Attacks on traditional ciphers are based on solutions from [Practical Cryptography](http://practicalcryptography.com/cryptanalysis/).
+Attacks on traditional ciphers are based on solutions from [Practical Cryptography](http://practicalcryptography.com/cryptanalysis/).
